@@ -1,7 +1,7 @@
 import sys
 
 if len(sys.argv) < 2:
-        print("Usage: python script.py <your_parameter>")
+        print("Usage: python makepic.py <customer>")
         sys.exit(1)
 else:
         # Print the command line parameter
@@ -19,6 +19,8 @@ import os
 from PIL import Image
 
 directory = '/project/aipics/'
+if not os.path.exists(directory):
+	os.mkdir(directory)
 directory = directory + customer
 if not os.path.exists(directory):
 	os.mkdir(directory)
@@ -44,13 +46,11 @@ print ('Loaded Loras')
  
 print ('Making images')
 for i in range(1,10):
-	prompt = customer+' as a schoolboy with dishevelled hair in the playground'
+	prompt = customer+' in space'
 #	img = pipe(prompt=prompt,num_inference_steps=70, cross_attention_kwargs={"scale": 1.0}).images[0]
 	img = pipe(prompt=prompt,num_inference_steps=100).images[0]
 	filename=customer+str(i)+'.png'
 	img.save(filename)
 
 print ('Finished...')
-# unload lora
-pipe.unet.set_attn_processor(AttnProcessor2_0())
-pipe._remove_text_encoder_monkey_patch()
+
