@@ -11,6 +11,8 @@ else:
 if len(sys.argv) == 3:
 	situation = sys.argv[2]
 	print("Situation: ", situation)
+else:
+	situation = "in space"
 
 print ('Import AI Libraries')
 import torch
