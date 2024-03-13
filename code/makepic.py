@@ -1,13 +1,16 @@
 import sys
 
 if len(sys.argv) < 2:
-        print("Usage: python makepic.py <customer>")
+        print("Usage: python makepic.py <customer> <situation>")
         sys.exit(1)
 else:
         # Print the command line parameter
         customer = sys.argv[1]
-        print("Command line parameter:", customer)
+        print("Command line parameter: ", customer)
 
+if len(sys.argv) == 3:
+	situation = sys.argv[2]
+	print("Situation: ", situation)
 
 print ('Import AI Libraries')
 import torch
@@ -32,7 +35,7 @@ base_model_id = "stabilityai/stable-diffusion-xl-base-1.0"
 pipe = DiffusionPipeline.from_pretrained(base_model_id, torch_dtype=torch.float16)
 pipe = pipe.to("cuda")
 lora ='/project/models/tuned-'+customer
-print ('Making ', customer)
+print ('Making ', customer, situation)
 
 #pipe.load_lora_weights(lora,adapter_name=customer)
 pipe.load_lora_weights(lora)
@@ -46,7 +49,7 @@ print ('Loaded Loras')
  
 print ('Making images')
 for i in range(1,10):
-	prompt = customer+' in space'
+	prompt = customer+situation
 #	img = pipe(prompt=prompt,num_inference_steps=70, cross_attention_kwargs={"scale": 1.0}).images[0]
 	img = pipe(prompt=prompt,num_inference_steps=100).images[0]
 	filename=customer+str(i)+'.png'
