@@ -3,6 +3,7 @@ from diffusers import StableDiffusionXLPipeline, DiffusionPipeline
 import subprocess
 
 import sys
+import os
 
 if len(sys.argv) < 2:
         print("Usage: python script.py <your_parameter>")
@@ -41,7 +42,8 @@ launch_command = 'accelerate launch /workspace/diffusers/examples/dreambooth/tra
 
 trial = 'accelerate launch'
 
-subprocess.run(launch_command,shell=True)
+#subprocess.run(launch_command, shell=True)
+os.system(launch_command)
 
 print ('Finished')
 
